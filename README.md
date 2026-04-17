@@ -1,70 +1,65 @@
-# Black hole explorer
+# 🌌 Black Hole Explorer - Quasar Classification
 
-🚧 Projet en cours, ceci n'est pas la version finale 🚧
+[![Status](https://img.shields.io/badge/Status-In--Progress-orange)](#)
+[![Python](https://img.shields.io/badge/Python-3.13-blue)](https://www.python.org/)
+[![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-green)](https://scikit-learn.org/)
 
-## Objectif
+> **Projet de Data Science** : Identification de trous noirs supermassifs (Quasars) par fusion de données multi-spectrales.
 
-Le but de ce projet est d'extraire, transformer et collecter les données de sondes spatiales pour ensuite faire de l'analyse exploratoire afin de reconnaître ce qui différencie les quasars des étoiles.
-Ensuite, développer un modèle ML pour prédire si l'objet observé est un quasar en fonction de ses données.
+---
 
+## 🎯 Objectif du projet
+Extraire, transformer et fusionner les données de trois sondes spatiales majeures pour entraîner un modèle de **Machine Learning** capable de distinguer les **Quasars** (QSOs) des **Étoiles**.
 
 ### Ce qu'il faut savoir
-
 Les quasars sont des **trous noirs supermassifs**, souvent au centre d'une galaxie, qui accrètent **du gaz et de la poussière** chauffées à très haute température qui émettent de la lumière très énergétique et brillante.
 De tels objets n'existent que très loin de notre galaxie, et ont autant de **magnitude** (luminosité apparente) que les étoiles environnantes.
 Ceci dit, ces objets ont des particularités par rapport aux étoiles : Leur spectre électromagnetique tend vers le **bleu/violet** ainsi que les **hauts infrarouges**, et leur distance est si grande qu'ils paraissent presque immobiles même avec la méthode de la **parallaxe**.
 L'infrarouge, le bleu et la parallaxe seront donc nos principaux KPIs pour identifier les quasars.
 
+### 🔭 Pourquoi c'est un défi ?
+Les quasars sont situés à des milliards d'années-lumière mais leur **magnitude** (luminosité apparente) ressemble à celle des étoiles de notre propre galaxie. Pour les différencier, nous utilisons une signature unique :
+* 🔵 **Excès de bleu** (Spectre UV/Bleu prononcé)
+* 🌡️ **Signature thermique** (Hauts infrarouges dus à la poussière chauffée)
+* 📍 **Immobilité spatiale** (Parallaxe et mouvement propre quasi nuls)
 
-### Jeux de données
+---
 
-J'utilise les catalogues suivants : 
-- **SDSS** : cette sonde observe les objets dans le domaine visible
-- **WISE** : cette sonde observe les objets dans le domaine de l'infrarouge
-- **Gaia** : cette sonde observe la distance et le mouvement des objets
+## 🛰️ Sources de Données (The Multi-Wavelength Stack)
 
+| Catalogue | Domaine | Utilité |
+| :--- | :--- | :--- |
+| **SDSS** | 🌈 Optique | Analyse du spectre visible (U, G, R, I, Z) |
+| **WISE** | ☁️ Infrarouge | Détection de la poussière chaude entourant le trou noir |
+| **Gaia** | 📏 Astrométrie | Mesure de la distance (parallaxe) et du mouvement |
 
-### Étapes clés
+---
 
-1 : Requêtes SQL directement sur le site du catalogue SDSS (http://skyserver.sdss.org) 
-    On essaie d'avoir autant d'étoiles que de quasars
+## 🛠️ Étapes Clés de la Pipeline
 
-2 : Jointure du dataset WISE par cross-matching grâce aux coordonnées ra/dec qui sont nos repères dans l'espace
+1. **Extraction SQL** : Requêtes sur le [SkyServer SDSS](http://skyserver.sdss.org) pour un dataset équilibré.
+2. **Cross-Matching** : Jointures complexes avec WISE et Gaia via les coordonnées célestes (`RA`/`DEC`).
+3. **Feature Engineering** : Création des KPIs (`u-g`, `W1-W2`, `parallax`).
+4. **Machine Learning** : Entraînement d'un **Random Forest** avec pondération de classe.
 
-3 : Jointure du dataset Gaia également par cross-matching avec les coordonnées
+---
 
-4 : Création de colonnes qui seront nos KPIs pour identifier les quasars (forte couleur bleue, hauts infrarouges, lointain)
+## 📊 Aperçu de l'Analyse Exploratoire (EDA)
 
-5 : Entrainement du modèle machine learning pour reconnaître la signature visuelle des quasars
+Le graphique ci-dessous illustre la séparation nette entre les deux classes grâce à nos KPIs :
 
-6 : Appliquer ce modèle sur des données de potentiels quasars 
+<p align="center">
+  <img src="assets/pairplot.png" alt="Analyse des KPIs" width="800">
+</p>
 
+### 💡 Interprétation des axes :
+* **`W1-W2`** : Plus la valeur est élevée, plus l'objet est "chaud" (Infrarouge). 
+  * *Tendance Quasars : Valeurs élevées.*
+* **`u-g`** : Plus la valeur est faible, plus l'objet est "bleu". 
+  * *Tendance Quasars : Valeurs faibles.*
+* **`Parallax`** : Une valeur proche de 0 indique un objet extragalactique.
+  * *Tendance Quasars : Distribution centrée sur 0.*
 
-### Aperçu de l'analyse exploratoire
+👉 [**Consulter le Notebook détaillé**](notebooks/eda2.ipynb)
 
-`W1-W2(infrarouge), u-g(bleu) et parallaxe(distance) pour chaque classe "STAR" (étoile) et "QSO" (quasar).
-Ces graphiques nous permettent de comprendre les différences observables entre ces deux types d'objet
-Ils prouvent aussi que ces données seront très utiles au modèle ML`
-
-[Pairplot](assets/pairplot.png)
-
-Dans ce pairplot, on observe des tendances distinctes entre les étoiles et les quasars.
-
-**W1-W2 :** Plus la valeur est haute, plus l'objet tend vers le "haut infrarouge"
-**U-G :** Plus la valeur est basse, plus l'objet tend vers le bleu.
-
-_La tendance des étoiles :_ 
-Valeurs (W1-W2) faible & (u-g) élevée : bas infrarouge + couleur moins bleue
-
-_La tendance des quasars:_
-Valeurs (W1-W2) élevée & (u-g) faible : haut infrarouge + couleur bleue
-
-👉 [Consulter le Notebook détaillé](notebooks/eda2.ipynb)
-
-
-
-
-
-
-Flo
-Avril 2026
+👤 **Florent Folliard** - _Étudiant Data Science (Paris Ynov Campus)_ - Avril 2026
