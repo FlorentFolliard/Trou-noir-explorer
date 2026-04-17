@@ -12,10 +12,10 @@
 Extraire, transformer et fusionner les données de trois sondes spatiales majeures pour entraîner un modèle de **Machine Learning** capable de distinguer les **Quasars** (QSOs) des **Étoiles**.
 
 ### Ce qu'il faut savoir
-Les quasars sont des **trous noirs supermassifs**, souvent au centre d'une galaxie, qui accrètent **du gaz et de la poussière** chauffées à très haute température qui émettent de la lumière très énergétique et brillante.
-De tels objets n'existent que très loin de notre galaxie, et ont autant de **magnitude** (luminosité apparente) que les étoiles environnantes.
-Ceci dit, ces objets ont des particularités par rapport aux étoiles : Leur spectre électromagnetique tend vers le **bleu/violet** ainsi que les **hauts infrarouges**, et leur distance est si grande qu'ils paraissent presque immobiles même avec la méthode de la **parallaxe**.
-L'infrarouge, le bleu et la parallaxe seront donc nos principaux KPIs pour identifier les quasars.
+Les quasars sont des **trous noirs supermassifs**, souvent au centre d'une galaxie, qui accrètent **du gaz et de la poussière** chauffées à très haute température qui émettent de la lumière très énergétique et brillante. C'est cette lumière qui nous permet de les observer.
+
+Hormis le trou noir supermassif de notre propre galaxie, les trous noirs stellaires (plus communs, de petite taille) nous sont invisibles. On devine leur présence par le comportement gravitationnel des étoiles qui orbitent autour d'eux.
+C'est pour cette raison que ce projet se porte uniquement sur les quasars.
 
 ### 🔭 Pourquoi c'est un défi ?
 Les quasars sont situés à des milliards d'années-lumière mais leur **magnitude** (luminosité apparente) ressemble à celle des étoiles de notre propre galaxie. Pour les différencier, nous utilisons une signature unique :
