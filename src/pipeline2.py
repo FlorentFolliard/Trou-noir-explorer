@@ -1,6 +1,17 @@
-# Jointure du catalogue Gaia au csv SDSS + WISE (./data/raw/df_10k_raw.csv)
-# Le catalogue de Gaia me permet d'avoir la position exacte des objets grâce à la parallaxe
-# ce qui nous permettra de mieux identifier les trous noirs.
+"""
+--------------------------
+JOINING GAIA CATALOG INTO SDSS+WISE DATASET
+--------------------------
+input : /data/clean/df_ml_ready.csv (SDSS + WISE from pipeline1)
+output : /data/clean/df_ml_ready.csv (SDSS + WISE + Gaia)
+--------------------------
+1.  Cross-matching Gaia DR3 using ra/dec coordinates just like we did for WISE
+    Gaia catalog will add parallax and proper motion features that are crucial for distinguishing stars from quasars (parallax, pmra, pmde)
+2.  Feature Engineering : Creating new columns like 'u-g' and 'W1-W2' that are known to be good discriminants
+3.  Final Cleaning : Dropping any rows that are missing critical features after the join
+--------------------------
+Flo - april 2026
+"""
 
 from astroquery.vizier import Vizier
 from astropy.coordinates import SkyCoord, match_coordinates_sky
@@ -36,9 +47,7 @@ def build_multi_wavelength_dataset(sdss_file_path):
     else:
         print("⚠️ Aucun résultat Gaia trouvé.")
 
-    # Création des KPIs : 
-    # u-g : cette valeur correspond à la couleur bleue
-    # W1-W2 : cette valeur correspond à la valeur infrarouge (plus la valeur est élevée, plus l'objet est chaud)
+    # Creating KPIs columns 
     df_raw['u_g'] = df_raw['u'] - df_raw['g']
     df_raw['W1_W2'] = df_raw['W1mag'] - df_raw['W2mag']
     

@@ -1,8 +1,16 @@
-# 1 : Jointure verticale des étoiles et quasars du SDSS
-# 2 : Jointure de WISE dans le catalogue SDSS
-# - J'utilise la bibliothèque astroquery.vizier pour extraire les données du catalogue WISE
-# - J'utilise les coordonnées ra et dec pour matcher les données
-# - La biliothèque Astropi.coordinates nous permet le corss-matching avec les coordonnées ra/dec
+""" 
+--------------------------
+SDSS-WISE DATA PIPELINE
+--------------------------
+input : /data/raw/df_10k_raw.csv (SDSS 5k stars + 5k quasars)
+output : /data/clean/df_ml_ready.csv 
+--------------------------
+Inner join with WISE data using astroquery.vizier and astropy.coordinates
+The astropy.coordinates library allows me to perform cross-matching with ra/dec coordinates
+WISE catalog will add crucial infrared features (W1mag, W2mag) that help distinguish stars from quasars
+--------------------------
+Flo - april 2026
+"""
 
 from astroquery.vizier import Vizier
 from astropy.coordinates import SkyCoord, match_coordinates_sky
