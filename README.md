@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/quasar.jpg" alt="représentation quasar">
+</p>
+
 # 🌌 Black Hole Explorer - Quasar Classification
 
 [![Status](https://img.shields.io/badge/Status-In--Progress-orange)](#)
