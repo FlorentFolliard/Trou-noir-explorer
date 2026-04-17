@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/quasar.jpg" alt="représentation quasar">
+  <img src="assets/quasar.jpg" alt="représentation quasar" width="800">
 </p>
 
 # 🌌 Black Hole Explorer - Quasar Classification
