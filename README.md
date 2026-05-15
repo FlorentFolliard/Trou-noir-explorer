@@ -4,6 +4,8 @@
 
 # 🌌 Black Hole Explorer - Quasar Classification
 
+/!\ Projet en cours /!\
+
 [![Status](https://img.shields.io/badge/Status-In--Progress-orange)](#)
 [![Python](https://img.shields.io/badge/Python-3.13-blue)](https://www.python.org/)
 [![Scikit-Learn](https://img.shields.io/badge/ML-Scikit--Learn-green)](https://scikit-learn.org/)
